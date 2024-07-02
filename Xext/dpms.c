@@ -310,10 +310,8 @@ ProcDPMSGetVersion(ClientPtr client)
         .minorVersion = SERVER_DPMS_MINOR_VERSION
     };
 
-    if (client->swapped) {
-        swaps(&reply.majorVersion);
-        swaps(&reply.minorVersion);
-    }
+    REPLY_FIELD_CARD16(majorVersion);
+    REPLY_FIELD_CARD16(minorVersion);
 
     return X_SEND_REPLY_SIMPLE(client, reply);
 }
@@ -341,11 +339,9 @@ ProcDPMSGetTimeouts(ClientPtr client)
         .off = DPMSOffTime / MILLI_PER_SECOND
     };
 
-    if (client->swapped) {
-        swaps(&reply.standby);
-        swaps(&reply.suspend);
-        swaps(&reply.off);
-    }
+    REPLY_FIELD_CARD16(standby);
+    REPLY_FIELD_CARD16(suspend);
+    REPLY_FIELD_CARD16(off);
 
     return X_SEND_REPLY_SIMPLE(client, reply);
 }
@@ -438,9 +434,7 @@ ProcDPMSInfo(ClientPtr client)
         .state = DPMSEnabled
     };
 
-    if (client->swapped) {
-        swaps(&reply.power_level);
-    }
+    REPLY_FIELD_CARD16(power_level);
     return X_SEND_REPLY_SIMPLE(client, reply);
 }
 
